@@ -2,13 +2,14 @@ version: '3'
 
 services:
   apache_img:
-    container_name: ${COMPOSE_PROJECT_NAME}_apache_con
+    container_name: ${COMPOSE_PROJECT_NAME}_apache
     build:
       context: ./apache
       args:
         - WEB_USER=${WEB_USER}
         - WEB_GROUP=${WEB_GROUP}
         - APACHE_ROOT_DIR=${WORK_ROOT_DIR}
+        - LOG_APACHE_ROOT_DIR=${LOG_APACHE_ROOT_DIR}
     volumes:
       - ../src:${WORK_ROOT_DIR}
       - ../logs/apache:${LOG_APACHE_ROOT_DIR}
@@ -20,9 +21,36 @@ services:
     environment:
       - APACHE_EXPOSED_PORT=${APACHE_EXPOSED_PORT}
       - APACHE_ROOT_DIR=${WORK_ROOT_DIR}
+      - LOG_APACHE_ROOT_DIR=${LOG_APACHE_ROOT_DIR}
       - WEB_USER=${WEB_USER}
       - WEB_GROUP=${WEB_GROUP}
-
+#  php_7_4_img:
+#    container_name: ${COMPOSE_PROJECT_NAME}_php_7_4
+#    build:
+#      context: ./php
+#      args:
+#        - WEB_USER=${WEB_USER}
+#        - WEB_GROUP=${WEB_GROUP}
+#        - PHP_ROOT_DIR=${PHP_ROOT_DIR}
+#    working_dir: ${PHP_APP_DIR}
+#    volumes:
+#      - ../src:${PHP_APP_DIR}
+#      - ../logs/php:${PHP_ROOT_DIR}/logs
+#    depends_on:
+#      - apache_img
+#      - mysql_img
+#    networks:
+#      public_net:
+#        ipv4_address: ${PHP_IP}
+#    environment:
+#      - PHP_ROOT_DIR=${PHP_ROOT_DIR}
+#      - APACHE_IP=${APACHE_IP}
+#      - APACHE_EXPOSED_PORT=${APACHE_EXPOSED_PORT}
+#      - WEB_USER=${WEB_USER}
+#      - WEB_GROUP=${WEB_GROUP}
+#      - MYSQL_IP=${MYSQL_IP}
+#      - MYSQL_ROOT_USER=${MYSQL_ROOT_USER}
+#      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
 networks:
   public_net:
     driver: bridge
