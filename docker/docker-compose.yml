@@ -24,33 +24,33 @@ services:
       - LOG_APACHE_ROOT_DIR=${LOG_APACHE_ROOT_DIR}
       - WEB_USER=${WEB_USER}
       - WEB_GROUP=${WEB_GROUP}
-#  php_7_4_img:
-#    container_name: ${COMPOSE_PROJECT_NAME}_php_7_4
-#    build:
-#      context: ./php
-#      args:
-#        - WEB_USER=${WEB_USER}
-#        - WEB_GROUP=${WEB_GROUP}
-#        - PHP_ROOT_DIR=${PHP_ROOT_DIR}
-#    working_dir: ${PHP_APP_DIR}
-#    volumes:
-#      - ../src:${PHP_APP_DIR}
-#      - ../logs/php:${PHP_ROOT_DIR}/logs
-#    depends_on:
-#      - apache_img
-#      - mysql_img
-#    networks:
-#      public_net:
-#        ipv4_address: ${PHP_IP}
-#    environment:
-#      - PHP_ROOT_DIR=${PHP_ROOT_DIR}
-#      - APACHE_IP=${APACHE_IP}
-#      - APACHE_EXPOSED_PORT=${APACHE_EXPOSED_PORT}
-#      - WEB_USER=${WEB_USER}
-#      - WEB_GROUP=${WEB_GROUP}
-#      - MYSQL_IP=${MYSQL_IP}
-#      - MYSQL_ROOT_USER=${MYSQL_ROOT_USER}
-#      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - PHP_74_IP=${PHP_74_IP}
+      - PHP_74_EXPOSED_PORT=${PHP_74_EXPOSED_PORT}
+      - WORK_ROOT_DIR=${WORK_ROOT_DIR}
+  php_7_4_img:
+    container_name: ${COMPOSE_PROJECT_NAME}_php_7_4
+    build:
+      context: ./php
+      args:
+        - WEB_USER=${WEB_USER}
+        - WEB_GROUP=${WEB_GROUP}
+        - PHP_ROOT_DIR=${PHP_ROOT_DIR}
+        - WORK_ROOT_DIR=${WORK_ROOT_DIR}
+    volumes:
+      - ../src:${WORK_ROOT_DIR}:delegated
+      - ../logs/php:${PHP_ROOT_DIR}/logs
+    ports:
+      - ${PHP_74_EXPOSED_PORT}:9000
+    networks:
+      public_net:
+        ipv4_address: ${PHP_74_IP}
+    environment:
+      - PHP_ROOT_DIR=${PHP_ROOT_DIR}
+      - WORK_ROOT_DIR=${WORK_ROOT_DIR}
+      - APACHE_IP=${APACHE_IP}
+      - APACHE_EXPOSED_PORT=${APACHE_EXPOSED_PORT}
+      - WEB_USER=${WEB_USER}
+      - WEB_GROUP=${WEB_GROUP}
 networks:
   public_net:
     driver: bridge
