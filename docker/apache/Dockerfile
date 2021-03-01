@@ -9,4 +9,7 @@ COPY httpd.conf /usr/local/apache2/conf/httpd.conf
 
 RUN chown ${WEB_USER}:${WEB_GROUP} ${APACHE_ROOT_DIR}
 
+RUN usermod -u 1000 ${WEB_USER}
+RUN groupmod -g 1000 ${WEB_GROUP}
+
 RUN chown 777 -R ${APACHE_ROOT_DIR}

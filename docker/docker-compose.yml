@@ -10,6 +10,8 @@ services:
         - WEB_GROUP=${WEB_GROUP}
         - APACHE_ROOT_DIR=${WORK_ROOT_DIR}
         - LOG_APACHE_ROOT_DIR=${LOG_APACHE_ROOT_DIR}
+        - PHP_74_IP=${PHP_74_IP}
+        - PHP_74_EXPOSED_PORT=${PHP_74_EXPOSED_PORT}
     volumes:
       - ../src:${WORK_ROOT_DIR}
       - ../logs/apache:${LOG_APACHE_ROOT_DIR}
