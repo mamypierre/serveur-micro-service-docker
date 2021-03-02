@@ -15,3 +15,18 @@ RUN mkdir -p ${WORK_ROOT_DIR}
 RUN chown ${WEB_USER}:${WEB_GROUP} ${WORK_ROOT_DIR}
 WORKDIR ${WORK_ROOT_DIR}
 RUN chgrp -R staff ${PHP_ROOT_DIR}/php-fpm.d/www.conf
+
+#module
+RUN apt-get update
+RUN apt-get install libtool
+RUN apt-get install libcurl4-openssl-dev
+RUN apt-get install libxml2-dev
+RUN apt-get install libpng-dev
+
+
+#extension
+RUN docker-php-ext-install bcmath
+RUN docker-php-ext-install ctype
+RUN docker-php-ext-install curl
+RUN docker-php-ext-install dom
+RUN docker-php-ext-install gd
