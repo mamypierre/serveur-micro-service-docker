@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  apache_img:
+  apache:
     container_name: ${COMPOSE_PROJECT_NAME}_apache
     build:
       context: ./apache
@@ -31,8 +31,8 @@ services:
       - PHP_74_IP=${PHP_74_IP}
       - PHP_74_EXPOSED_PORT=${PHP_74_EXPOSED_PORT}
       - WORK_ROOT_DIR=${WORK_ROOT_DIR}
-  php_7_4_img:
-    container_name: ${COMPOSE_PROJECT_NAME}_php_7_4
+  php_7_4:
+    container_name: ${COMPOSE_PROJECT_NAME}_php74
     build:
       context: ./php/74
       args:
@@ -58,7 +58,7 @@ services:
       - MYSQL_ROOT_USER=${MYSQL_ROOT_USER}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_EXPOSED_PORT=${MYSQL_EXPOSED_PORT}
-  mysql_img:
+  mysql:
     container_name: ${COMPOSE_PROJECT_NAME}_mysql
     build:
       context: ./mysql
