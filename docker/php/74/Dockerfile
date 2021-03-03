@@ -47,3 +47,8 @@ RUN docker-php-ext-install zip
 RUN docker-php-ext-configure zip
 RUN docker-php-ext-install sockets
 
+#composer
+
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --version=1.10.20
+
+
