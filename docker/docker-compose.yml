@@ -19,6 +19,7 @@ services:
       - ./apache/conf/extra/httpd-vhosts.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf
     ports:
       - ${APACHE_EXPOSED_PORT}:80
+    restart: always
     networks:
       public_net:
         ipv4_address: ${APACHE_IP}
@@ -45,6 +46,7 @@ services:
       - ./php/74/www.conf:${PHP_ROOT_DIR}/php-fpm.d/www.conf
       - ../logs/php:${PHP_ROOT_DIR}/logs
       - ./php/composer/auth.json:/root/.composer/auth.json
+    restart: always
     networks:
       public_net:
         ipv4_address: ${PHP_74_IP}
@@ -66,6 +68,7 @@ services:
       args:
         - MYSQL_CONTAINER_USER=${MYSQL_CONTAINER_USER}
         - MYSQL_CONTAINER_GROUP=${MYSQL_CONTAINER_GROUP}
+    restart: always
     ports:
       - ${MYSQL_EXPOSED_PORT}:3306
     volumes:
