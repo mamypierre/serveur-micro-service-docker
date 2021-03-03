@@ -17,11 +17,17 @@ WORKDIR ${WORK_ROOT_DIR}
 RUN chgrp -R staff ${PHP_ROOT_DIR}/php-fpm.d/www.conf
 
 #module
-RUN apt-get update
-RUN apt-get install libtool
-RUN apt-get install libcurl4-openssl-dev
-RUN apt-get install libxml2-dev
-RUN apt-get install libpng-dev
+RUN apt-get update -y
+RUN apt-get install -y apt-utils
+RUN apt-get install libtool -y
+RUN apt-get install libcurl4-openssl-dev -y
+RUN apt-get install libxml2-dev  -y
+RUN apt-get install libpng-dev  -y
+RUN apt-get install libjpeg-dev  -y
+RUN apt-get install libfreetype6-dev  -y
+RUN apt-get install libxslt-dev  -y
+RUN apt-get install libzip-dev -y
+RUN apt-get install libonig-dev -y
 
 
 #extension
@@ -30,3 +36,13 @@ RUN docker-php-ext-install ctype
 RUN docker-php-ext-install curl
 RUN docker-php-ext-install dom
 RUN docker-php-ext-install gd
+RUN docker-php-ext-configure gd --with-jpeg --with-freetype
+RUN docker-php-ext-install intl
+RUN docker-php-ext-install pdo_mysql
+RUN docker-php-ext-install soap
+RUN docker-php-ext-configure soap
+RUN docker-php-ext-install xsl
+RUN docker-php-ext-install zip
+RUN docker-php-ext-configure zip
+RUN docker-php-ext-install sockets
+
