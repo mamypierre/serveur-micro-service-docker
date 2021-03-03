@@ -3,3 +3,4 @@ create folder src/project1 ,src/project2 add httpd-vhosts.conf ex : DocumentRoot
 Next, navigate in your terminal to the directory you cloned this, and spin up the containers for the web server by running docker-compose up -d --build site_apache
 
 docker exec service_php74  php -v
+php -d memory_limit=-1 /usr/local/bin/composer create-project 

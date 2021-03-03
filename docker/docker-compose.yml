@@ -44,6 +44,7 @@ services:
       - ../src:${WORK_ROOT_DIR}:delegated
       - ./php/74/www.conf:${PHP_ROOT_DIR}/php-fpm.d/www.conf
       - ../logs/php:${PHP_ROOT_DIR}/logs
+      - ./php/composer/auth.json:/root/.composer/auth.json
     networks:
       public_net:
         ipv4_address: ${PHP_74_IP}

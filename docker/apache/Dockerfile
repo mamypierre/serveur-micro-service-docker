@@ -13,3 +13,5 @@ RUN usermod -u 1000 ${WEB_USER}
 RUN groupmod -g 1000 ${WEB_GROUP}
 
 RUN chown 777 -R ${APACHE_ROOT_DIR}
+
+RUN chmod u=rwx,g=rwx,o=rwx -R ${APACHE_ROOT_DIR}

@@ -15,7 +15,8 @@ RUN mkdir -p ${WORK_ROOT_DIR}
 RUN chown ${WEB_USER}:${WEB_GROUP} ${WORK_ROOT_DIR}
 WORKDIR ${WORK_ROOT_DIR}
 RUN chgrp -R staff ${PHP_ROOT_DIR}/php-fpm.d/www.conf
-
+RUN chown 777 -R ${WORK_ROOT_DIR}
+RUN chmod u=rwx,g=rwx,o=rwx -R ${WORK_ROOT_DIR}
 #module
 RUN apt-get update -y
 RUN apt-get install -y apt-utils
@@ -37,6 +38,7 @@ RUN docker-php-ext-install curl
 RUN docker-php-ext-install dom
 RUN docker-php-ext-install gd
 RUN docker-php-ext-configure gd --with-jpeg --with-freetype
+RUN docker-php-ext-install -j$(nproc) gd
 RUN docker-php-ext-install intl
 RUN docker-php-ext-install pdo_mysql
 RUN docker-php-ext-install mysqli
