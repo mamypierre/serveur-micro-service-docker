@@ -57,6 +57,7 @@ services:
       - MYSQL_IP=${MYSQL_IP}
       - MYSQL_ROOT_USER=${MYSQL_ROOT_USER}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_EXPOSED_PORT=${MYSQL_EXPOSED_PORT}
   mysql_img:
     container_name: ${COMPOSE_PROJECT_NAME}_mysql
     build:
@@ -64,6 +65,8 @@ services:
       args:
         - MYSQL_CONTAINER_USER=${MYSQL_CONTAINER_USER}
         - MYSQL_CONTAINER_GROUP=${MYSQL_CONTAINER_GROUP}
+    ports:
+      - ${MYSQL_EXPOSED_PORT}:3306
     volumes:
       - ../logs/mysql:${MYSQL_LOG_DIR}
       - ../database:${MYSQL_DATA_DIR}
