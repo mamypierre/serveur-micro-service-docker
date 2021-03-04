@@ -100,18 +100,13 @@ services:
     restart: always
     ports:
       - ${ELASTIC_SEARCH_EXPOSED_PORT}:9200
-    networks:
-      public_net:
-        ipv4_address: ${ELASTIC_SEARCH_IP}
+      - 9300:9300
   redis:
     image: redis
     container_name: ${COMPOSE_PROJECT_NAME}_redis
     restart: always
     ports:
       - ${REDIS_EXPOSED_PORT}:6379
-    networks:
-      public_net:
-        ipv4_address: ${REDIS_IP}
 networks:
   public_net:
     driver: bridge
