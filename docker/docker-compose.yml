@@ -101,6 +101,8 @@ services:
     ports:
       - ${ELASTIC_SEARCH_EXPOSED_PORT}:9200
       - 9300:9300
+    environment:
+      - discovery.type=single-node
   redis:
     image: redis
     container_name: ${COMPOSE_PROJECT_NAME}_redis
