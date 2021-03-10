@@ -6,6 +6,7 @@ ARG PHP_ROOT_DIR
 ARG WORK_ROOT_DIR
 
 COPY www.conf ${PHP_ROOT_DIR}/php-fpm.d/www.conf
+COPY php.ini ${PHP_ROOT_DIR}/php/conf.d/php.ini
 
 #RUN addgroup -g 1000 ${WEB_GROUP} && adduser -G ${WEB_USER} -g ${WEB_USER} -s /bin/sh -D ${WEB_USER}
 RUN usermod -u 1000 ${WEB_USER}
@@ -48,7 +49,8 @@ RUN docker-php-ext-install xsl
 RUN docker-php-ext-install zip
 RUN docker-php-ext-configure zip
 RUN docker-php-ext-install sockets
-
+RUN docker-php-ext-install -j$(nproc) opcache
+COPY docker-php-ext-opcache.ini ${PHP_ROOT_DIR}/php/conf.d/docker-php-ext-opcache.ini
 #composer
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --version=1.10.20

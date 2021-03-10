@@ -44,6 +44,7 @@ services:
     volumes:
       - ../src:${WORK_ROOT_DIR}:delegated
       - ./php/74/www.conf:${PHP_ROOT_DIR}/php-fpm.d/www.conf
+      - ./php/74/php.ini:${PHP_ROOT_DIR}/php/conf.d/php.ini
       - ../logs/php:${PHP_ROOT_DIR}/logs
       - ./php/composer/auth.json:/root/.composer/auth.json
     restart: always
@@ -88,7 +89,6 @@ services:
       - ${PHP_MY_ADMIN_EXPOSED_PORT}:80
     environment:
       - PMA_HOST=${MYSQL_IP}
-      - PMA_PORT=${MYSQL_EXPOSED_PORT}
       - PMA_USER=${MYSQL_ROOT_USER}
       - PMA_PASSWORD=${MYSQL_ROOT_PASSWORD}
     networks:
