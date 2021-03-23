@@ -11,9 +11,10 @@ services:
         - APACHE_ROOT_DIR=${WORK_ROOT_DIR}
         - LOG_APACHE_ROOT_DIR=${LOG_APACHE_ROOT_DIR}
         - PHP_74_IP=${PHP_74_IP}
-        - PHP_74_EXPOSED_PORT=${PHP_74_EXPOSED_PORT}
+        - PHP_72_IP=${PHP_72_IP}
+        - PHP_56_IP=${PHP_56_IP}
     volumes:
-      - ../src:${WORK_ROOT_DIR}
+      - ../../projects:${WORK_ROOT_DIR}
       - ../logs/apache:${LOG_APACHE_ROOT_DIR}
       - ./apache/conf/httpd.conf:/usr/local/apache2/conf/httpd.conf
       - ./apache/conf/extra/httpd-vhosts.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf
@@ -30,7 +31,8 @@ services:
       - WEB_USER=${WEB_USER}
       - WEB_GROUP=${WEB_GROUP}
       - PHP_74_IP=${PHP_74_IP}
-      - PHP_74_EXPOSED_PORT=${PHP_74_EXPOSED_PORT}
+      - PHP_72_IP=${PHP_72_IP}
+      - PHP_56_IP=${PHP_56_IP}
       - WORK_ROOT_DIR=${WORK_ROOT_DIR}
   php_7_4:
     container_name: ${COMPOSE_PROJECT_NAME}_php74
@@ -42,7 +44,7 @@ services:
         - PHP_ROOT_DIR=${PHP_ROOT_DIR}
         - WORK_ROOT_DIR=${WORK_ROOT_DIR}
     volumes:
-      - ../src:${WORK_ROOT_DIR}:delegated
+      - ../../projects:${WORK_ROOT_DIR}:delegated
       - ./php/74/www.conf:${PHP_ROOT_DIR}/php-fpm.d/www.conf
       - ./php/74/php.ini:${PHP_ROOT_DIR}/php/conf.d/php.ini
       - ../logs/php:${PHP_ROOT_DIR}/logs
@@ -51,6 +53,66 @@ services:
     networks:
       public_net:
         ipv4_address: ${PHP_74_IP}
+    environment:
+      - PHP_ROOT_DIR=${PHP_ROOT_DIR}
+      - WORK_ROOT_DIR=${WORK_ROOT_DIR}
+      - APACHE_IP=${APACHE_IP}
+      - APACHE_EXPOSED_PORT=${APACHE_EXPOSED_PORT}
+      - WEB_USER=${WEB_USER}
+      - WEB_GROUP=${WEB_GROUP}
+      - MYSQL_IP=${MYSQL_IP}
+      - MYSQL_ROOT_USER=${MYSQL_ROOT_USER}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_EXPOSED_PORT=${MYSQL_EXPOSED_PORT}
+  php_7_2:
+    container_name: ${COMPOSE_PROJECT_NAME}_php72
+    build:
+      context: ./php/72
+      args:
+        - WEB_USER=${WEB_USER}
+        - WEB_GROUP=${WEB_GROUP}
+        - PHP_ROOT_DIR=${PHP_ROOT_DIR}
+        - WORK_ROOT_DIR=${WORK_ROOT_DIR}
+    volumes:
+      - ../../projects:${WORK_ROOT_DIR}:delegated
+      - ./php/72/www.conf:${PHP_ROOT_DIR}/php-fpm.d/www.conf
+      - ./php/72/php.ini:${PHP_ROOT_DIR}/php/conf.d/php.ini
+      - ../logs/php:${PHP_ROOT_DIR}/logs
+      - ./php/composer/auth.json:/root/.composer/auth.json
+    restart: always
+    networks:
+      public_net:
+        ipv4_address: ${PHP_72_IP}
+    environment:
+      - PHP_ROOT_DIR=${PHP_ROOT_DIR}
+      - WORK_ROOT_DIR=${WORK_ROOT_DIR}
+      - APACHE_IP=${APACHE_IP}
+      - APACHE_EXPOSED_PORT=${APACHE_EXPOSED_PORT}
+      - WEB_USER=${WEB_USER}
+      - WEB_GROUP=${WEB_GROUP}
+      - MYSQL_IP=${MYSQL_IP}
+      - MYSQL_ROOT_USER=${MYSQL_ROOT_USER}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_EXPOSED_PORT=${MYSQL_EXPOSED_PORT}
+  php_5_6:
+    container_name: ${COMPOSE_PROJECT_NAME}_php56
+    build:
+      context: ./php/56
+      args:
+        - WEB_USER=${WEB_USER}
+        - WEB_GROUP=${WEB_GROUP}
+        - PHP_ROOT_DIR=${PHP_ROOT_DIR}
+        - WORK_ROOT_DIR=${WORK_ROOT_DIR}
+    volumes:
+      - ../../projects:${WORK_ROOT_DIR}:delegated
+      - ./php/56/www.conf:${PHP_ROOT_DIR}/php-fpm.d/www.conf
+      - ./php/56/php.ini:${PHP_ROOT_DIR}/php/conf.d/php.ini
+      - ../logs/php:${PHP_ROOT_DIR}/logs
+      - ./php/composer/auth.json:/root/.composer/auth.json
+    restart: always
+    networks:
+      public_net:
+        ipv4_address: ${PHP_56_IP}
     environment:
       - PHP_ROOT_DIR=${PHP_ROOT_DIR}
       - WORK_ROOT_DIR=${WORK_ROOT_DIR}
