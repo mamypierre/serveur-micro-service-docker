@@ -10,32 +10,29 @@ services:
         - WEB_GROUP=${WEB_GROUP}
         - APACHE_ROOT_DIR=${WORK_ROOT_DIR}
         - LOG_APACHE_ROOT_DIR=${LOG_APACHE_ROOT_DIR}
-        - PHP_74_IP=${PHP_74_IP}
-        - PHP_72_IP=${PHP_72_IP}
-        - PHP_56_IP=${PHP_56_IP}
-        - MYSQL_IP=${MYSQL_IP}
+        - PHP_74_IP=php_7_4
+        - PHP_72_IP=php_7_2
+        - PHP_56_IP=php_5_6
+        - MYSQL_IP=mysql
     volumes:
-      - ../../projects:${WORK_ROOT_DIR}
+      - ../../../projects:${WORK_ROOT_DIR}
       - ../logs/apache:${LOG_APACHE_ROOT_DIR}
       - ./apache/conf/httpd.conf:/usr/local/apache2/conf/httpd.conf
       - ./apache/conf/extra/httpd-vhosts.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf
     ports:
       - ${APACHE_EXPOSED_PORT}:80
     restart: always
-    networks:
-      public_net:
-        ipv4_address: ${APACHE_IP}
     environment:
       - APACHE_EXPOSED_PORT=${APACHE_EXPOSED_PORT}
       - APACHE_ROOT_DIR=${WORK_ROOT_DIR}
       - LOG_APACHE_ROOT_DIR=${LOG_APACHE_ROOT_DIR}
       - WEB_USER=${WEB_USER}
       - WEB_GROUP=${WEB_GROUP}
-      - PHP_74_IP=${PHP_74_IP}
-      - PHP_72_IP=${PHP_72_IP}
-      - PHP_56_IP=${PHP_56_IP}
+      - PHP_74_IP=php_7_4
+      - PHP_72_IP=php_7_2
+      - PHP_56_IP=php_5_6
       - WORK_ROOT_DIR=${WORK_ROOT_DIR}
-      - MYSQL_IP=${MYSQL_IP}
+      - MYSQL_IP=mysql
   php_7_4:
     container_name: ${COMPOSE_PROJECT_NAME}_php74
     build:
@@ -45,30 +42,27 @@ services:
         - WEB_GROUP=${WEB_GROUP}
         - PHP_ROOT_DIR=${PHP_ROOT_DIR}
         - WORK_ROOT_DIR=${WORK_ROOT_DIR}
-        - MYSQL_IP=${MYSQL_IP}
+        - MYSQL_IP=mysql
     volumes:
-      - ../../projects:${WORK_ROOT_DIR}:delegated
+      - ../../../projects:${WORK_ROOT_DIR}:delegated
       - ./php/74/www.conf:${PHP_ROOT_DIR}/php-fpm.d/www.conf
       - ./php/74/php.ini:${PHP_ROOT_DIR}/php/conf.d/php.ini
       - ../logs/php:${PHP_ROOT_DIR}/logs
       - ./php/composer/auth.json:/root/.composer/auth.json
     restart: always
-    networks:
-      public_net:
-        ipv4_address: ${PHP_74_IP}
     environment:
       - PHP_ROOT_DIR=${PHP_ROOT_DIR}
       - WORK_ROOT_DIR=${WORK_ROOT_DIR}
-      - APACHE_IP=${APACHE_IP}
+      - APACHE_IP=apache
       - APACHE_EXPOSED_PORT=${APACHE_EXPOSED_PORT}
       - WEB_USER=${WEB_USER}
       - WEB_GROUP=${WEB_GROUP}
-      - MYSQL_IP=${MYSQL_IP}
+      - MYSQL_IP=mysql
       - MYSQL_ROOT_USER=${MYSQL_ROOT_USER}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_EXPOSED_PORT=${MYSQL_EXPOSED_PORT}
-      - ELASTIC_IP=${ELASTIC_IP}
-      - REDIS_IP=${REDIS_IP}
+      - ELASTIC_IP=elasticsearch
+      - REDIS_IP=redis
   php_7_2:
     container_name: ${COMPOSE_PROJECT_NAME}_php72
     build:
@@ -79,28 +73,25 @@ services:
         - PHP_ROOT_DIR=${PHP_ROOT_DIR}
         - WORK_ROOT_DIR=${WORK_ROOT_DIR}
     volumes:
-      - ../../projects:${WORK_ROOT_DIR}:delegated
+      - ../../../projects:${WORK_ROOT_DIR}:delegated
       - ./php/72/www.conf:${PHP_ROOT_DIR}/php-fpm.d/www.conf
       - ./php/72/php.ini:${PHP_ROOT_DIR}/php/conf.d/php.ini
       - ../logs/php:${PHP_ROOT_DIR}/logs
       - ./php/composer/auth.json:/root/.composer/auth.json
     restart: always
-    networks:
-      public_net:
-        ipv4_address: ${PHP_72_IP}
     environment:
       - PHP_ROOT_DIR=${PHP_ROOT_DIR}
       - WORK_ROOT_DIR=${WORK_ROOT_DIR}
-      - APACHE_IP=${APACHE_IP}
+      - APACHE_IP=apache
       - APACHE_EXPOSED_PORT=${APACHE_EXPOSED_PORT}
       - WEB_USER=${WEB_USER}
       - WEB_GROUP=${WEB_GROUP}
-      - MYSQL_IP=${MYSQL_IP}
+      - MYSQL_IP=mysql
       - MYSQL_ROOT_USER=${MYSQL_ROOT_USER}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_EXPOSED_PORT=${MYSQL_EXPOSED_PORT}
-      - ELASTIC_IP=${ELASTIC_IP}
-      - REDIS_IP=${REDIS_IP}
+      - ELASTIC_IP=elasticsearch
+      - REDIS_IP=redis
   php_5_6:
     container_name: ${COMPOSE_PROJECT_NAME}_php56
     build:
@@ -111,28 +102,25 @@ services:
         - PHP_ROOT_DIR=${PHP_ROOT_DIR}
         - WORK_ROOT_DIR=${WORK_ROOT_DIR}
     volumes:
-      - ../../projects:${WORK_ROOT_DIR}:delegated
+      - ../../../projects:${WORK_ROOT_DIR}:delegated
       - ./php/56/www.conf:${PHP_ROOT_DIR}/php-fpm.d/www.conf
       - ./php/56/php.ini:${PHP_ROOT_DIR}/php/conf.d/php.ini
       - ../logs/php:${PHP_ROOT_DIR}/logs
       - ./php/composer/auth.json:/root/.composer/auth.json
     restart: always
-    networks:
-      public_net:
-        ipv4_address: ${PHP_56_IP}
     environment:
       - PHP_ROOT_DIR=${PHP_ROOT_DIR}
       - WORK_ROOT_DIR=${WORK_ROOT_DIR}
-      - APACHE_IP=${APACHE_IP}
+      - APACHE_IP=apache
       - APACHE_EXPOSED_PORT=${APACHE_EXPOSED_PORT}
       - WEB_USER=${WEB_USER}
       - WEB_GROUP=${WEB_GROUP}
-      - MYSQL_IP=${MYSQL_IP}
+      - MYSQL_IP=mysql
       - MYSQL_ROOT_USER=${MYSQL_ROOT_USER}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_EXPOSED_PORT=${MYSQL_EXPOSED_PORT}
-      - ELASTIC_IP=${ELASTIC_IP}
-      - REDIS_IP=${REDIS_IP}
+      - ELASTIC_IP=elasticsearch
+      - REDIS_IP=redis
   mysql:
     container_name: ${COMPOSE_PROJECT_NAME}_mysql
     build:
@@ -146,9 +134,6 @@ services:
     volumes:
       - ../logs/mysql:${MYSQL_LOG_DIR}
       - ../database:${MYSQL_DATA_DIR}
-    networks:
-      public_net:
-        ipv4_address: ${MYSQL_IP}
     environment:
       - MYSQL_CONTAINER_USER=${MYSQL_CONTAINER_USER}
       - MYSQL_CONTAINER_GROUP=${MYSQL_CONTAINER_GROUP}
@@ -159,12 +144,9 @@ services:
     ports:
       - ${PHP_MY_ADMIN_EXPOSED_PORT}:80
     environment:
-      - PMA_HOST=${MYSQL_IP}
+      - PMA_HOST=mysql
       - PMA_USER=${MYSQL_ROOT_USER}
       - PMA_PASSWORD=${MYSQL_ROOT_PASSWORD}
-    networks:
-      public_net:
-        ipv4_address: ${PHP_MY_ADMIN_IP}
   elasticsearch:
     image: elasticsearch:7.10.1
     container_name: ${COMPOSE_PROJECT_NAME}_elasticsearch
@@ -174,22 +156,9 @@ services:
       - 9300:9300
     environment:
       - discovery.type=single-node
-    networks:
-      public_net:
-        ipv4_address: ${ELASTIC_IP}
   redis:
     image: redis
     container_name: ${COMPOSE_PROJECT_NAME}_redis
     restart: always
     ports:
       - ${REDIS_EXPOSED_PORT}:6379
-    networks:
-      public_net:
-        ipv4_address: ${REDIS_IP}
-networks:
-  public_net:
-    driver: bridge
-    ipam:
-      driver: default
-      config:
-        - subnet: ${NETWORK_SUBNET}
