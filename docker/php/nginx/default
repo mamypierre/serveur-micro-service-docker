@@ -1,0 +1,12 @@
+upstream backend_elasticsearch{
+    server  host.docker.internal:9200;
+}
+
+server {
+        listen 9200;
+        listen [::]:9200;
+        location / {
+                include proxy_params;
+                proxy_pass http://backend_elasticsearch;
+        }
+}

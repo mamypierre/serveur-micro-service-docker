@@ -30,6 +30,7 @@ RUN apt-get install libfreetype6-dev  -y
 RUN apt-get install libxslt-dev  -y
 RUN apt-get install libzip-dev -y
 RUN apt-get install libonig-dev -y
+RUN apt-get install nginx -y
 
 
 #extension
@@ -54,6 +55,11 @@ RUN docker-php-ext-install calendar && docker-php-ext-configure calendar
 COPY docker-php-ext-opcache.ini ${PHP_ROOT_DIR}/php/conf.d/docker-php-ext-opcache.ini
 #composer
 
+
+
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --version=1.10.20
 
-
+#CMD ["service", "nginx", "start ;"]
+#CMD ping localhost service nginx start
+#ENTRYPOINT  /bin/bash
+#exemple ENTRYPOINT service nginx start && service ssh start && /bin/bash "use && to separate your code"
