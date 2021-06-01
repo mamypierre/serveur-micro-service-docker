@@ -50,6 +50,7 @@ RUN docker-php-ext-install zip
 RUN docker-php-ext-configure zip
 RUN docker-php-ext-install sockets
 RUN docker-php-ext-install -j$(nproc) opcache
+RUN docker-php-ext-install calendar && docker-php-ext-configure calendar
 COPY docker-php-ext-opcache.ini ${PHP_ROOT_DIR}/php/conf.d/docker-php-ext-opcache.ini
 #composer
 

@@ -63,6 +63,8 @@ services:
       - MYSQL_EXPOSED_PORT=${MYSQL_EXPOSED_PORT}
       - ELASTIC_IP=elasticsearch
       - REDIS_IP=redis
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
   php_7_2:
     container_name: ${COMPOSE_PROJECT_NAME}_php72
     build:
@@ -92,6 +94,8 @@ services:
       - MYSQL_EXPOSED_PORT=${MYSQL_EXPOSED_PORT}
       - ELASTIC_IP=elasticsearch
       - REDIS_IP=redis
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
   php_5_6:
     container_name: ${COMPOSE_PROJECT_NAME}_php56
     build:
@@ -121,6 +125,8 @@ services:
       - MYSQL_EXPOSED_PORT=${MYSQL_EXPOSED_PORT}
       - ELASTIC_IP=elasticsearch
       - REDIS_IP=redis
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
   mysql:
     container_name: ${COMPOSE_PROJECT_NAME}_mysql
     build:
@@ -134,6 +140,7 @@ services:
     volumes:
       - ../logs/mysql:${MYSQL_LOG_DIR}
       - ../database:${MYSQL_DATA_DIR}
+      - ../../../projects/link_database:/root/link_database
     environment:
       - MYSQL_CONTAINER_USER=${MYSQL_CONTAINER_USER}
       - MYSQL_CONTAINER_GROUP=${MYSQL_CONTAINER_GROUP}
