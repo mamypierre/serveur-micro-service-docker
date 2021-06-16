@@ -30,6 +30,7 @@ RUN apt-get install libfreetype6-dev  -y
 RUN apt-get install libxslt-dev  -y
 RUN apt-get install libzip-dev -y
 RUN apt-get install libonig-dev -y
+RUN apt-get install nginx -y
 
 
 #extension
